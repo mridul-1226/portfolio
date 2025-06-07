@@ -52,32 +52,52 @@ class ProjectsPage extends StatelessWidget {
             LayoutBuilder(builder: (context, constraints) {
               return Wrap(
                 spacing: 20,
-                runSpacing: 20,
+                runSpacing: 40, // Increased runSpacing for better separation
                 children: projects
                     .map(
                       (project) => SizedBox(
-                        width: constraints.maxWidth / 2.0 - 20.0,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(project.image),
-                            const SizedBox(height: 5),
-                            Text(
-                              project.description,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: captionColor,
-                                fontSize: 20,
+                        width: constraints.maxWidth / 2.0 -
+                            30.0, // Slightly less width for margin
+                        child: Container(
+                          constraints: const BoxConstraints(
+                            minHeight: 120,
+                            maxHeight: 160, // Limit card height
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                project.image,
+                                height: 60,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () => Utils.launchURL('github.com/'),
-                              icon: const FaIcon(FontAwesomeIcons.github),
-                              color: const Color(0xFFD9DEEC),
-                              iconSize: 24,
-                            ),
-                          ],
+                              const SizedBox(height: 10),
+                              Text(
+                                project.description,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: captionColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: project.gitLink.isNotEmpty
+                                    ? () => Utils.launchURL(project.gitLink)
+                                    : null,
+                                icon: const FaIcon(FontAwesomeIcons.github),
+                                color: const Color(0xFFD9DEEC),
+                                iconSize: 24,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )

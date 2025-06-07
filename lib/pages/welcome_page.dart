@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_app/utils/constants.dart';
 import 'package:portfolio_app/utils/screen_helper.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -13,19 +16,43 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  List<MaterialColor> colorizeColors = [
+  final List<MaterialColor> colorizeColors = [
     Colors.purple,
     Colors.amber,
     Colors.cyan,
     Colors.brown,
   ];
+
+  Future<void> _openCv() async {
+    log('message');
+    const url =
+        'https://drive.google.com/file/d/1knPz3s3AeRCdTY6X3GvSO3LP5LGy5lFd/view?usp=sharing';
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not open CV link')),
+        );
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error opening CV: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) => ScreenHelper(
         desktop: _buildUi(desktopMaxWidth),
         tablet: _buildUi(tabletMaxWidth),
         mobile: _buildUi(ScreenHelper.mobileMaxWidth(context)),
       );
-  _buildUi(double width) => Container(
+
+  Widget _buildUi(double width) => SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Center(
           child: LayoutBuilder(
@@ -69,7 +96,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 const Text(
-                                  'I\'m',
+                                  "I'm",
                                   style: TextStyle(
                                     fontFamily: 'Horizon',
                                     fontSize: 40,
@@ -97,7 +124,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                           const SizedBox(height: 16),
                           const Padding(
-                            padding: EdgeInsets.only(left: 16, right: 16),
+                            padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               miniDescription,
                               style: TextStyle(
@@ -105,11 +132,12 @@ class _WelcomePageState extends State<WelcomePage> {
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white70,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                           const SizedBox(height: 30),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: _openCv,
                             style: ElevatedButton.styleFrom(
                               side: const BorderSide(
                                 width: 3,
@@ -118,16 +146,23 @@ class _WelcomePageState extends State<WelcomePage> {
                               backgroundColor: Colors.transparent,
                               padding: const EdgeInsets.all(20),
                             ),
-                            child: AnimatedTextKit(
-                              animatedTexts: [
-                                ColorizeAnimatedText(
-                                  'Download CV',
-                                  textStyle: const TextStyle(
+                            child: SizedBox(
+                              height: 40,
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  ColorizeAnimatedText(
+                                    'Download CV',
+                                    textStyle: const TextStyle(
                                       fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                  colors: colorizeColors,
-                                )
-                              ],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    colors: colorizeColors,
+                                  )
+                                ],
+                                repeatForever: true,
+                                isRepeatingAnimation: true,
+                                onTap: _openCv,
+                              ),
                             ),
                           ),
                         ],

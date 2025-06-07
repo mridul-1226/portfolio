@@ -11,7 +11,10 @@ class Assets {
   static const String assetsLanguage = 'assets/language.jpg';
   static const String assetsMap = 'assets/map.png';
   static const String assetsPhone = 'assets/phone.png';
+  static const String assetsPollpe = 'assets/pollpe.jpg';
   static const String assetsShopping = 'assets/shopping.jpg';
   static const String assetsWhatsapp = 'assets/whatsapp.png';
   static const String assetsWorkout = 'assets/workout.jpg';
+
+  static const String resume = 'assets/Mridul_Mishra__Resume.pdf';
 }

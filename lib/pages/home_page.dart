@@ -9,6 +9,7 @@ import 'package:portfolio_app/utils/globals.dart';
 import 'package:portfolio_app/widgets/drawer_widget.dart';
 import 'package:portfolio_app/widgets/top_bar_contents.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'experience_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> pages = [
     const WelcomePage(),
     const AboutPage(),
+    const ExperiencePage(),
     const ProjectsPage(),
     const EducationPage(),
     const SkillPage(),

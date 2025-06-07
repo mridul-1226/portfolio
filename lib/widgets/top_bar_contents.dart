@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_app/utils/constants.dart';
@@ -26,12 +24,12 @@ class _TopBarContentsState extends State<TopBarContents> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final desktopheader = PreferredSize(
+        preferredSize: Size(screenSize.width, 70),
         child: DesktopTabBar(
           widget: widget,
           screenSize: screenSize,
           itemsScrollController: widget.itemsScrollController,
-        ),
-        preferredSize: Size(screenSize.width, 70));
+        ));
 
     return ScreenHelper(
       desktop: desktopheader,
@@ -73,7 +71,7 @@ class DesktopTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white.withOpacity(widget.opacity),
+      color: Colors.white.withValues(alpha: widget.opacity),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Row(
@@ -84,13 +82,15 @@ class DesktopTabBar extends StatelessWidget {
             const SizedBox(width: 24),
             menuItem(toPage: 1, title: 'About'),
             const SizedBox(width: 24),
-            menuItem(toPage: 2, title: 'My Projects'),
+            menuItem(toPage: 2, title: 'Experience'),
             const SizedBox(width: 24),
-            menuItem(toPage: 3, title: 'Education'),
+            menuItem(toPage: 3, title: 'My Projects'),
             const SizedBox(width: 24),
-            menuItem(toPage: 4, title: 'My Skills'),
+            menuItem(toPage: 4, title: 'Education'),
             const SizedBox(width: 24),
-            menuItem(toPage: 5, title: 'Contact Me')
+            menuItem(toPage: 5, title: 'My Skills'),
+            const SizedBox(width: 24),
+            menuItem(toPage: 6, title: 'Contact Me')
           ],
         ),
       ),

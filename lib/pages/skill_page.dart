@@ -65,7 +65,13 @@ class SkillPage extends StatelessWidget {
                                     alignment: Alignment.centerLeft,
                                     height: 38,
                                     color: Colors.white,
-                                    child: Text(skill.skill),
+                                    child: Text(
+                                      skill.skill,
+                                      style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 12),

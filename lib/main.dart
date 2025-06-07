@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio_app/utils/constants.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -15,20 +14,18 @@ class MyApp extends StatelessWidget {
         title: name,
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.dark,
-        darkTheme: Theme.of(context).copyWith(
-          platform: TargetPlatform.android,
+        darkTheme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: backgroundColor,
           primaryColor: primaryColor,
           canvasColor: backgroundColor,
-          textTheme: GoogleFonts.latoTextTheme(),
         ),
         builder: (context, widget) => ResponsiveWrapper.builder(
           ClampingScrollWrapper.builder(context, widget!),
           defaultScale: true,
           breakpoints: [
             const ResponsiveBreakpoint.resize(450, name: MOBILE),
-            const ResponsiveBreakpoint.resize(450, name: TABLET),
-            const ResponsiveBreakpoint.resize(450, name: DESKTOP),
+            const ResponsiveBreakpoint.resize(800, name: TABLET),
+            const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
           ],
         ),
         home: const HomePage(),
